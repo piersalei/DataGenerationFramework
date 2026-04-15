@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Canonical Contracts** - Establish task schemas, structured task specifications, capability metadata, and the canonical sample model. (completed 2026-04-15)
 - [x] **Phase 2: Scenario And Sampling Engine** - Build template, role, latent-state, and seeded sampling foundations. (completed 2026-04-15)
 - [x] **Phase 3: Generation Runtime** - Add provider-agnostic batch generation and run provenance. (completed 2026-04-15)
-- [ ] **Phase 4: Quality Control Pipeline** - Implement deterministic and score-based filtering plus audit artifacts.
+- [x] **Phase 4: Quality Control Pipeline** - Implement deterministic and score-based filtering plus audit artifacts. (completed 2026-04-15)
 - [ ] **Phase 5: Multi-Format Export** - Render approved canonical samples into QA, MCQ, and open QA outputs.
 - [ ] **Phase 6: Reproducible Benchmark Runs** - Package run manifests, tracking, and baseline task packs for internal benchmark building.
 
@@ -86,10 +86,10 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 04-01: Implement schema validation and deterministic QC rule engine.
-- [ ] 04-02: Implement judge or score-based QC extension points.
-- [ ] 04-03: Implement duplicate and near-duplicate detection pipeline.
-- [ ] 04-04: Emit QC reports, rejection manifests, review queues, and acceptance metrics.
+- [x] 04-01: Implement schema validation and deterministic QC rule engine.
+- [x] 04-02: Implement judge or score-based QC extension points.
+- [x] 04-03: Implement duplicate and near-duplicate detection pipeline.
+- [x] 04-04: Emit QC reports, rejection manifests, review queues, and acceptance metrics.
 
 ### Phase 5: Multi-Format Export
 **Goal**: Export approved canonical samples into QA, multiple-choice, and open-ended QA records without semantic drift.
@@ -133,6 +133,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 1. Canonical Contracts | 3/3 | Complete    | 2026-04-15 |
 | 2. Scenario And Sampling Engine | 3/3 | Complete    | 2026-04-15 |
 | 3. Generation Runtime | 4/4 | Complete    | 2026-04-15 |
-| 4. Quality Control Pipeline | 0/4 | Not started | - |
+| 4. Quality Control Pipeline | 4/4 | Complete    | 2026-04-15 |
 | 5. Multi-Format Export | 0/3 | Not started | - |
 | 6. Reproducible Benchmark Runs | 0/3 | Not started | - |

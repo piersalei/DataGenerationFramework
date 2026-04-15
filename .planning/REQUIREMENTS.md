@@ -28,12 +28,12 @@
 
 ### Quality Control
 
-- [ ] **QUAL-01**: Framework validates every candidate sample against schema constraints before export.
-- [ ] **QUAL-02**: Framework applies rule-based quality filters for structural errors, answer leakage, and invalid latent-state consistency.
-- [ ] **QUAL-03**: Framework supports configurable score-based or judge-based filtering in addition to deterministic rules.
-- [ ] **QUAL-04**: Framework detects duplicate and near-duplicate accepted samples.
-- [ ] **QUAL-05**: Framework emits rejection reasons and QC artifacts that researchers can audit after a run.
-- [ ] **QUAL-06**: Framework supports human review, disagreement arbitration, and final keep-revise-discard decisions for flagged samples.
+- [x] **QUAL-01**: Framework validates every candidate sample against schema constraints before export.
+- [x] **QUAL-02**: Framework applies rule-based quality filters for structural errors, answer leakage, and invalid latent-state consistency.
+- [x] **QUAL-03**: Framework supports configurable score-based or judge-based filtering in addition to deterministic rules.
+- [x] **QUAL-04**: Framework detects duplicate and near-duplicate accepted samples.
+- [x] **QUAL-05**: Framework emits rejection reasons and QC artifacts that researchers can audit after a run.
+- [x] **QUAL-06**: Framework supports human review, disagreement arbitration, and final keep-revise-discard decisions for flagged samples.
 
 ### Export
 
@@ -81,12 +81,12 @@
 | GEN-02 | Phase 3 | Complete |
 | GEN-03 | Phase 3 | Complete |
 | GEN-04 | Phase 3 | Complete |
-| QUAL-01 | Phase 4 | Pending |
-| QUAL-02 | Phase 4 | Pending |
-| QUAL-03 | Phase 4 | Pending |
-| QUAL-04 | Phase 4 | Pending |
-| QUAL-05 | Phase 4 | Pending |
-| QUAL-06 | Phase 4 | Pending |
+| QUAL-01 | Phase 4 | Complete |
+| QUAL-02 | Phase 4 | Complete |
+| QUAL-03 | Phase 4 | Complete |
+| QUAL-04 | Phase 4 | Complete |
+| QUAL-05 | Phase 4 | Complete |
+| QUAL-06 | Phase 4 | Complete |
 | EXPO-01 | Phase 5 | Pending |
 | EXPO-02 | Phase 5 | Pending |
 | EXPO-03 | Phase 5 | Pending |
@@ -101,4 +101,4 @@
 
 ---
 *Requirements defined: 2026-04-15*
-*Last updated: 2026-04-15 after initial definition*
+*Last updated: 2026-04-15 after Phase 4 completion*
