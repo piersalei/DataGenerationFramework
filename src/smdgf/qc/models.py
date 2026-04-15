@@ -67,6 +67,19 @@ class ReviewDisposition(BaseModel):
     reviewed_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
+class ReviewQueueEntry(BaseModel):
+    """Queued human-review item with explicit evidence."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    candidate_id: str = Field(min_length=1)
+    status: Literal["pending", "resolved"] = "pending"
+    findings: list[QualityFinding] = Field(default_factory=list)
+    recommended_action: DecisionLabel = "review"
+    notes: Optional[str] = None
+    final_disposition: Optional[ReviewDisposition] = None
+
+
 class DuplicateCluster(BaseModel):
     """Cluster of duplicate or near-duplicate candidates."""
 
@@ -109,3 +122,16 @@ class QualityDecision(BaseModel):
     review_required: bool = False
     final_disposition: Optional[ReviewDisposition] = None
     metadata: dict[str, Any] = Field(default_factory=dict)
+
+
+class AcceptanceMetrics(BaseModel):
+    """Summary counts for QC acceptance and rejection."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    total_candidates: int = Field(default=0, ge=0)
+    accepted: int = Field(default=0, ge=0)
+    rejected: int = Field(default=0, ge=0)
+    review: int = Field(default=0, ge=0)
+    acceptance_rate: float = Field(default=0.0, ge=0.0, le=1.0)
+    rejection_reasons: dict[str, int] = Field(default_factory=dict)
