@@ -7,10 +7,10 @@
 
 ### Task Contracts
 
-- [ ] **TASK-01**: Researcher can define a task schema with task id, target social-mind ability, required latent variables, and answer contract.
-- [ ] **TASK-02**: Researcher can register task metadata for intention, belief, relation, emotion, motivation, social decision, or implicit stance categories.
-- [ ] **TASK-03**: Framework stores one canonical sample representation that is independent of final export format.
-- [ ] **TASK-04**: Researcher can author structured task specification artifacts that capture scene rules, question patterns, and quality expectations before batch expansion.
+- [x] **TASK-01**: Researcher can define a task schema with task id, target social-mind ability, required latent variables, and answer contract.
+- [x] **TASK-02**: Researcher can register task metadata for intention, belief, relation, emotion, motivation, social decision, or implicit stance categories.
+- [x] **TASK-03**: Framework stores one canonical sample representation that is independent of final export format.
+- [x] **TASK-04**: Researcher can author structured task specification artifacts that capture scene rules, question patterns, and quality expectations before batch expansion.
 
 ### Scenario Modeling
 
@@ -69,10 +69,10 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| TASK-01 | Phase 1 | Pending |
-| TASK-02 | Phase 1 | Pending |
-| TASK-03 | Phase 1 | Pending |
-| TASK-04 | Phase 1 | Pending |
+| TASK-01 | Phase 1 | Complete |
+| TASK-02 | Phase 1 | Complete |
+| TASK-03 | Phase 1 | Complete |
+| TASK-04 | Phase 1 | Complete |
 | SCEN-01 | Phase 2 | Pending |
 | SCEN-02 | Phase 2 | Pending |
 | SCEN-03 | Phase 2 | Pending |

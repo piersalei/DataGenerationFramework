@@ -12,7 +12,7 @@ The project will start by establishing stable canonical contracts, then move upw
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Canonical Contracts** - Establish task schemas, structured task specifications, capability metadata, and the canonical sample model.
+- [x] **Phase 1: Canonical Contracts** - Establish task schemas, structured task specifications, capability metadata, and the canonical sample model. (completed 2026-04-15)
 - [ ] **Phase 2: Scenario And Sampling Engine** - Build template, role, latent-state, and seeded sampling foundations.
 - [ ] **Phase 3: Generation Runtime** - Add provider-agnostic batch generation and run provenance.
 - [ ] **Phase 4: Quality Control Pipeline** - Implement deterministic and score-based filtering plus audit artifacts.
@@ -34,9 +34,9 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: Create project package structure, typed schema modules, and config scaffolding.
-- [ ] 01-02: Implement task registry, task specification models, and canonical sample models with validation tests.
-- [ ] 01-03: Add CLI entry points for schema inspection and contract validation.
+- [x] 01-01: Create project package structure, typed schema modules, and config scaffolding.
+- [x] 01-02: Implement task registry, task specification models, and canonical sample models with validation tests.
+- [x] 01-03: Add CLI entry points for schema inspection and contract validation.
 
 ### Phase 2: Scenario And Sampling Engine
 **Goal**: Build explicit scenario templates, role relations, latent-state modeling, and deterministic sampling from seeded configs.
@@ -130,7 +130,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Canonical Contracts | 0/3 | Not started | - |
+| 1. Canonical Contracts | 3/3 | Complete    | 2026-04-15 |
 | 2. Scenario And Sampling Engine | 0/3 | Not started | - |
 | 3. Generation Runtime | 0/4 | Not started | - |
 | 4. Quality Control Pipeline | 0/4 | Not started | - |

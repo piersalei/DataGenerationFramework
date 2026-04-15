@@ -4,14 +4,14 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Project initialization complete and ready for Phase 1 discussion/planning
-last_updated: "2026-04-15T10:38:11.130Z"
-last_activity: 2026-04-15 -- Phase 1 planning complete
+last_updated: "2026-04-15T10:51:22.393Z"
+last_activity: 2026-04-15
 progress:
   total_phases: 6
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 3
-  completed_plans: 0
-  percent: 0
+  completed_plans: 3
+  percent: 100
 ---
 
 # Project State
@@ -21,22 +21,22 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-15)
 
 **Core value:** Produce high-quality, reproducible social-mind benchmark data with minimal manual authoring while preserving one canonical sample that can be exported into multiple task formats.
-**Current focus:** Phase 1 - Canonical Contracts
+**Current focus:** Phase 2 - Scenario And Sampling Engine
 
 ## Current Position
 
-Phase: 1 of 6 (Canonical Contracts)
+Phase: 2 of 6 (Scenario And Sampling Engine)
 Plan: 0 of 3 in current phase
-Status: Ready to execute
-Last activity: 2026-04-15 -- Phase 1 planning complete
+Status: Ready to plan
+Last activity: 2026-04-15 - Phase 1 execution complete
 
-Progress: [..........] 0%
+Progress: [██..........] 17%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 0
+- Total plans completed: 3
 - Average duration: 0 min
 - Total execution time: 0.0 hours
 
@@ -44,7 +44,7 @@ Progress: [..........] 0%
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
+| 1 | 3 | - | - |
 
 **Recent Trend:**
 
@@ -61,6 +61,8 @@ Recent decisions affecting current work:
 - Initialization: Use a pipeline-first architecture around a canonical sample contract.
 - Initialization: Make quality control a mandatory stage rather than lightweight post-processing.
 - Initialization: Keep v1 CLI-first and provider-agnostic.
+- Phase 1: Keep canonical samples export-agnostic and push MCQ/QA/Open-QA rendering downstream.
+- Phase 1: Use strict Pydantic contracts with duplicate-safe registry behavior.
 
 ### Pending Todos
 
@@ -68,11 +70,11 @@ None yet.
 
 ### Blockers/Concerns
 
-- Need Phase 1 to lock the canonical sample schema before exporter work starts.
-- Need generation/runtime boundaries to stay separate from QC policy.
+- Need Phase 2 to preserve the canonical contract boundary while adding scenario and latent-state sampling.
+- Local runtime is Python 3.9.6, so implementation choices should remain testable on that interpreter unless the environment is upgraded.
 
 ## Session Continuity
 
 Last session: 2026-04-15 18:00
-Stopped at: Project initialization complete and ready for Phase 1 discussion/planning
+Stopped at: Completed Phase 1 and advanced to Phase 2 planning
 Resume file: None
