@@ -14,6 +14,7 @@ DecisionLabel = Literal["accept", "reject", "review"]
 FindingSeverity = Literal["info", "warning", "error", "critical"]
 FindingSource = Literal["rule", "judge", "dedup", "review"]
 ReviewOutcome = Literal["keep", "revise", "discard"]
+JudgeVerdict = Literal["accept", "review", "reject"]
 
 
 class QualityFinding(BaseModel):
@@ -38,6 +39,20 @@ class RuleResult(BaseModel):
     rule_id: str = Field(min_length=1)
     passed: bool = True
     findings: list[QualityFinding] = Field(default_factory=list)
+
+
+class JudgeResult(BaseModel):
+    """Normalized output from a soft QC judge or scorer."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    judge_id: str = Field(min_length=1)
+    score: Optional[float] = Field(default=None, ge=0.0, le=1.0)
+    verdict: Optional[JudgeVerdict] = None
+    confidence: Optional[float] = Field(default=None, ge=0.0, le=1.0)
+    explanation: Optional[str] = None
+    findings: list[QualityFinding] = Field(default_factory=list)
+    metadata: dict[str, Any] = Field(default_factory=dict)
 
 
 class ReviewDisposition(BaseModel):
