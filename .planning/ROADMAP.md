@@ -13,7 +13,7 @@ The project will start by establishing stable canonical contracts, then move upw
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Canonical Contracts** - Establish task schemas, structured task specifications, capability metadata, and the canonical sample model. (completed 2026-04-15)
-- [ ] **Phase 2: Scenario And Sampling Engine** - Build template, role, latent-state, and seeded sampling foundations.
+- [x] **Phase 2: Scenario And Sampling Engine** - Build template, role, latent-state, and seeded sampling foundations. (completed 2026-04-15)
 - [ ] **Phase 3: Generation Runtime** - Add provider-agnostic batch generation and run provenance.
 - [ ] **Phase 4: Quality Control Pipeline** - Implement deterministic and score-based filtering plus audit artifacts.
 - [ ] **Phase 5: Multi-Format Export** - Render approved canonical samples into QA, MCQ, and open QA outputs.
@@ -131,7 +131,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Canonical Contracts | 3/3 | Complete    | 2026-04-15 |
-| 2. Scenario And Sampling Engine | 0/3 | Not started | - |
+| 2. Scenario And Sampling Engine | 3/3 | Complete    | 2026-04-15 |
 | 3. Generation Runtime | 0/4 | Not started | - |
 | 4. Quality Control Pipeline | 0/4 | Not started | - |
 | 5. Multi-Format Export | 0/3 | Not started | - |
