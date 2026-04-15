@@ -23,7 +23,7 @@
 
 - [x] **GEN-01**: Researcher can run batch sample generation through a unified interface for local and remote LLM backends.
 - [x] **GEN-02**: Researcher can configure prompt rendering from task schema plus sampled scenario state.
-- [ ] **GEN-03**: Framework can resume interrupted generation jobs without silently duplicating accepted samples.
+- [x] **GEN-03**: Framework can resume interrupted generation jobs without silently duplicating accepted samples.
 - [x] **GEN-04**: Framework records request and response provenance for every generated candidate sample.
 
 ### Quality Control
@@ -79,7 +79,7 @@
 | SCEN-04 | Phase 2 | Complete |
 | GEN-01 | Phase 3 | Complete |
 | GEN-02 | Phase 3 | Complete |
-| GEN-03 | Phase 3 | Pending |
+| GEN-03 | Phase 3 | Complete |
 | GEN-04 | Phase 3 | Complete |
 | QUAL-01 | Phase 4 | Pending |
 | QUAL-02 | Phase 4 | Pending |
