@@ -10,6 +10,7 @@ from smdgf.generation.models import (
     ProviderConfig,
 )
 from smdgf.generation.providers import GenerationProvider, LiteLLMGenerationProvider
+from smdgf.generation.runtime import GenerationRuntime
 
 __all__ = [
     "GenerationError",
@@ -18,6 +19,7 @@ __all__ = [
     "GenerationResult",
     "GenerationRunItem",
     "GenerationRunManifest",
+    "GenerationRuntime",
     "GenerationUsage",
     "LiteLLMGenerationProvider",
     "ProviderConfig",
