@@ -51,7 +51,7 @@ Plans:
 
 Plans:
 - [x] 02-01: Implement template model, renderer helpers, and role graph abstractions.
-- [ ] 02-02: Implement latent-state samplers and deterministic seeded sampling policies.
+- [x] 02-02: Implement latent-state samplers and deterministic seeded sampling policies.
 - [ ] 02-03: Add sample preview and fixture-based tests for scenario generation.
 
 ### Phase 3: Generation Runtime

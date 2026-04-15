@@ -17,7 +17,7 @@
 - [x] **SCEN-01**: Researcher can define scene templates with typed slots and constraints.
 - [x] **SCEN-02**: Researcher can define multiple roles and their relations inside one scenario.
 - [x] **SCEN-03**: Researcher can define latent mental-state fields such as beliefs, intentions, emotions, or motivations as explicit sampled variables.
-- [ ] **SCEN-04**: Researcher can generate deterministic scenario samples from configs and random seeds.
+- [x] **SCEN-04**: Researcher can generate deterministic scenario samples from configs and random seeds.
 
 ### Generation Runtime
 
@@ -76,7 +76,7 @@
 | SCEN-01 | Phase 2 | Complete |
 | SCEN-02 | Phase 2 | Complete |
 | SCEN-03 | Phase 2 | Complete |
-| SCEN-04 | Phase 2 | Pending |
+| SCEN-04 | Phase 2 | Complete |
 | GEN-01 | Phase 3 | Pending |
 | GEN-02 | Phase 3 | Pending |
 | GEN-03 | Phase 3 | Pending |
