@@ -1,0 +1,39 @@
+template_id: relation.support
+task_id: emotion.typical
+scene_blueprint: "{helper} comforts {target} in the {location} after the presentation."
+slot_specs:
+  - slot_id: helper
+    value_type: person_name
+  - slot_id: target
+    value_type: person_name
+  - slot_id: location
+    value_type: location
+    allowed_values:
+      - office
+      - classroom
+      - garden
+roles:
+  - role_id: helper
+    role_type: agent
+    display_name_source: slot:helper
+  - role_id: target
+    role_type: agent
+    display_name_source: slot:target
+relations:
+  - relation_id: support-edge
+    source_role: helper
+    relation_type: supports
+    target_role: target
+latent_state_specs:
+  - state_id: target-emotion
+    owner_role: target
+    state_type: emotion
+    allowed_values:
+      - relieved
+      - grateful
+      - calm
+    sampling_strategy: choice
+constraints:
+  - constraint_id: requires-support
+    constraint_type: relation_required
+    description: Helper must support target.
