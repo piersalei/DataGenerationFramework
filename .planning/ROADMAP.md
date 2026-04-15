@@ -52,7 +52,7 @@ Plans:
 Plans:
 - [x] 02-01: Implement template model, renderer helpers, and role graph abstractions.
 - [x] 02-02: Implement latent-state samplers and deterministic seeded sampling policies.
-- [ ] 02-03: Add sample preview and fixture-based tests for scenario generation.
+- [x] 02-03: Add sample preview and fixture-based tests for scenario generation.
 
 ### Phase 3: Generation Runtime
 **Goal**: Execute batch generation jobs over local and remote providers with prompt rendering, resumability, and provenance capture.
