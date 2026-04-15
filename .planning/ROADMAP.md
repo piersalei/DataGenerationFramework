@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Canonical Contracts** - Establish task schemas, structured task specifications, capability metadata, and the canonical sample model. (completed 2026-04-15)
 - [x] **Phase 2: Scenario And Sampling Engine** - Build template, role, latent-state, and seeded sampling foundations. (completed 2026-04-15)
-- [ ] **Phase 3: Generation Runtime** - Add provider-agnostic batch generation and run provenance.
+- [x] **Phase 3: Generation Runtime** - Add provider-agnostic batch generation and run provenance. (completed 2026-04-15)
 - [ ] **Phase 4: Quality Control Pipeline** - Implement deterministic and score-based filtering plus audit artifacts.
 - [ ] **Phase 5: Multi-Format Export** - Render approved canonical samples into QA, MCQ, and open QA outputs.
 - [ ] **Phase 6: Reproducible Benchmark Runs** - Package run manifests, tracking, and baseline task packs for internal benchmark building.
@@ -70,7 +70,7 @@ Plans:
 - [x] 03-01: Implement provider adapter interface and LiteLLM-backed execution layer.
 - [x] 03-02: Implement prompt assembly from canonical task and scenario inputs.
 - [x] 03-03: Implement batched job runner with retries and resumable checkpoints.
-- [ ] 03-04: Persist provenance artifacts and generation logs.
+- [x] 03-04: Persist provenance artifacts and generation logs.
 
 ### Phase 4: Quality Control Pipeline
 **Goal**: Turn filtering and review into first-class stages with schema validation, deterministic rules, score-based filtering, deduplication, rejection audits, and human arbitration hooks.
@@ -132,7 +132,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 |-------|----------------|--------|-----------|
 | 1. Canonical Contracts | 3/3 | Complete    | 2026-04-15 |
 | 2. Scenario And Sampling Engine | 3/3 | Complete    | 2026-04-15 |
-| 3. Generation Runtime | 0/4 | Not started | - |
+| 3. Generation Runtime | 4/4 | Complete    | 2026-04-15 |
 | 4. Quality Control Pipeline | 0/4 | Not started | - |
 | 5. Multi-Format Export | 0/3 | Not started | - |
 | 6. Reproducible Benchmark Runs | 0/3 | Not started | - |
