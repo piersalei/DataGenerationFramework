@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import json
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any, Literal, Optional
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
@@ -119,3 +121,14 @@ class GenerationRunManifest(BaseModel):
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     items: list[GenerationRunItem] = Field(default_factory=list)
     metadata: dict[str, Any] = Field(default_factory=dict)
+
+    def write_json(self, path: Path) -> None:
+        """Write a deterministic JSON manifest artifact."""
+
+        path.write_text(self.model_dump_json(indent=2), encoding="utf-8")
+
+    @classmethod
+    def read_json(cls, path: Path) -> "GenerationRunManifest":
+        """Read a manifest artifact without executing custom code."""
+
+        return cls.model_validate(json.loads(path.read_text(encoding="utf-8")))

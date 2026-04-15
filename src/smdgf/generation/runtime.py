@@ -7,7 +7,6 @@ from pathlib import Path
 from typing import Iterable, List, Optional
 
 from smdgf.generation.models import (
-    GenerationError,
     GenerationRequest,
     GenerationResult,
     GenerationRunItem,
@@ -49,8 +48,8 @@ class GenerationRuntime:
             request = request_map[item.request_id]
             item.status = "running"
             self.checkpoint(manifest)
-            result = self._execute_with_retries(request)
-            item.attempts = item.attempts + 1
+            result, attempts = self._execute_with_retries(request)
+            item.attempts = item.attempts + attempts
             item.seed = request.seed
             item.prompt_fingerprint = request.prompt_metadata.get("prompt_fingerprint")
             if result.status == "completed":
@@ -70,23 +69,23 @@ class GenerationRuntime:
 
         if self.checkpoint_path is None:
             return
-        self.checkpoint_path.write_text(
-            manifest.model_dump_json(indent=2), encoding="utf-8"
-        )
+        manifest.write_json(self.checkpoint_path)
 
-    def _execute_with_retries(self, request: GenerationRequest) -> GenerationResult:
+    def _execute_with_retries(
+        self, request: GenerationRequest
+    ) -> tuple[GenerationResult, int]:
         attempt = 0
         last_result: Optional[GenerationResult] = None
         while attempt <= self.max_retries:
             result = self.provider.generate(request, self.provider_config)
-            if result.status == "completed":
-                return result
-            last_result = result
             attempt += 1
+            if result.status == "completed":
+                return result, attempt
+            last_result = result
 
         if last_result is None:
             raise RuntimeError("runtime reached retry exit without a provider result")
-        return last_result
+        return last_result, attempt
 
     def _load_or_initialize_manifest(
         self,
@@ -95,8 +94,7 @@ class GenerationRuntime:
         resume: bool,
     ) -> GenerationRunManifest:
         if resume and self.checkpoint_path is not None and self.checkpoint_path.exists():
-            payload = json.loads(self.checkpoint_path.read_text(encoding="utf-8"))
-            return GenerationRunManifest.model_validate(payload)
+            return GenerationRunManifest.read_json(self.checkpoint_path)
 
         items = [
             GenerationRunItem(
