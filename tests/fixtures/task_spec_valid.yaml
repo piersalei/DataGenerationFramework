@@ -1,0 +1,21 @@
+task_id: emotion.typical
+scene_templates:
+  - template_id: scene-1
+    narrative_template: "{person} received unexpected help before a presentation."
+    slots:
+      person: human name
+    role_constraints:
+      - person is the affected protagonist
+    latent_state_requirements:
+      - protagonist_emotion
+question_patterns:
+  - question_id: q1
+    prompt_template: "How does {person} feel?"
+    target_capability: emotion
+    answer_mode: single_choice
+    options_count: 4
+quality_expectations:
+  - expectation_id: no-leakage
+    description: Question must not leak the answer.
+    severity: error
+    rule_type: leakage

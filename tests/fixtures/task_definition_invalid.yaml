@@ -1,0 +1,6 @@
+task_id: invalid task id
+name: Invalid task
+description: Missing export formats and invalid id.
+ability_category: emotion
+answer_mode: single_choice
+supported_exports: []

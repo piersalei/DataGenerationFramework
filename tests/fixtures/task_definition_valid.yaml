@@ -1,0 +1,15 @@
+task_id: emotion.typical
+name: Typical emotion inference
+description: Assess emotion inference from a social scene.
+ability_category: emotion
+sub_capabilities:
+  - contextual_emotion
+latent_variables:
+  - name: protagonist_emotion
+    description: Emotion held by the protagonist after the event.
+    value_type: string
+answer_mode: single_choice
+supported_exports:
+  - mcq
+  - qa
+  - open_qa
