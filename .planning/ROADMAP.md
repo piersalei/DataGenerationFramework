@@ -68,7 +68,7 @@ Plans:
 
 Plans:
 - [x] 03-01: Implement provider adapter interface and LiteLLM-backed execution layer.
-- [ ] 03-02: Implement prompt assembly from canonical task and scenario inputs.
+- [x] 03-02: Implement prompt assembly from canonical task and scenario inputs.
 - [ ] 03-03: Implement batched job runner with retries and resumable checkpoints.
 - [ ] 03-04: Persist provenance artifacts and generation logs.
 
