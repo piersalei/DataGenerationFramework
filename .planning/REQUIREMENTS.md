@@ -14,9 +14,9 @@
 
 ### Scenario Modeling
 
-- [ ] **SCEN-01**: Researcher can define scene templates with typed slots and constraints.
-- [ ] **SCEN-02**: Researcher can define multiple roles and their relations inside one scenario.
-- [ ] **SCEN-03**: Researcher can define latent mental-state fields such as beliefs, intentions, emotions, or motivations as explicit sampled variables.
+- [x] **SCEN-01**: Researcher can define scene templates with typed slots and constraints.
+- [x] **SCEN-02**: Researcher can define multiple roles and their relations inside one scenario.
+- [x] **SCEN-03**: Researcher can define latent mental-state fields such as beliefs, intentions, emotions, or motivations as explicit sampled variables.
 - [ ] **SCEN-04**: Researcher can generate deterministic scenario samples from configs and random seeds.
 
 ### Generation Runtime
@@ -73,9 +73,9 @@
 | TASK-02 | Phase 1 | Complete |
 | TASK-03 | Phase 1 | Complete |
 | TASK-04 | Phase 1 | Complete |
-| SCEN-01 | Phase 2 | Pending |
-| SCEN-02 | Phase 2 | Pending |
-| SCEN-03 | Phase 2 | Pending |
+| SCEN-01 | Phase 2 | Complete |
+| SCEN-02 | Phase 2 | Complete |
+| SCEN-03 | Phase 2 | Complete |
 | SCEN-04 | Phase 2 | Pending |
 | GEN-01 | Phase 3 | Pending |
 | GEN-02 | Phase 3 | Pending |
