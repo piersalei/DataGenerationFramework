@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 
 class SlotSpec(BaseModel):
@@ -95,6 +95,39 @@ class SceneTemplate(BaseModel):
         if not slot_specs:
             raise ValueError("slot_specs must contain at least one slot")
         return slot_specs
+
+    @model_validator(mode="after")
+    def validate_references(self) -> "SceneTemplate":
+        """Ensure role and slot references are internally consistent."""
+
+        role_ids = {role.role_id for role in self.roles}
+        slot_ids = {slot.slot_id for slot in self.slot_specs}
+
+        for role in self.roles:
+            if role.display_name_source.startswith("slot:"):
+                slot_id = role.display_name_source.split(":", 1)[1]
+                if slot_id not in slot_ids:
+                    raise ValueError(
+                        f"display_name_source references unknown slot: {slot_id}"
+                    )
+
+        for relation in self.relations:
+            if relation.source_role not in role_ids:
+                raise ValueError(
+                    f"relation source_role references unknown role: {relation.source_role}"
+                )
+            if relation.target_role not in role_ids:
+                raise ValueError(
+                    f"relation target_role references unknown role: {relation.target_role}"
+                )
+
+        for latent_state in self.latent_state_specs:
+            if latent_state.owner_role not in role_ids:
+                raise ValueError(
+                    f"latent_state owner_role references unknown role: {latent_state.owner_role}"
+                )
+
+        return self
 
 
 class SampledRole(BaseModel):

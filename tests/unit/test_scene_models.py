@@ -83,6 +83,34 @@ def test_scene_template_supports_role_relations() -> None:
     assert relation.relation_type == "observes"
     assert relation.target_role == "actor"
 
+    with pytest.raises(ValueError, match="unknown role"):
+        SceneTemplate(
+            template_id="invalid-rel",
+            task_id="belief.false_location",
+            scene_blueprint="Broken relation reference.",
+            slot_specs=[
+                SlotSpec(slot_id="observer", value_type="person_name"),
+                SlotSpec(slot_id="actor", value_type="person_name"),
+            ],
+            roles=[
+                RoleSpec(
+                    role_id="observer",
+                    role_type="agent",
+                    display_name_source="slot:observer",
+                )
+            ],
+            relations=[
+                RelationSpec(
+                    relation_id="rel-1",
+                    source_role="observer",
+                    relation_type="observes",
+                    target_role="missing-role",
+                )
+            ],
+            latent_state_specs=[],
+            constraints=[],
+        )
+
 
 def test_latent_state_spec_is_structured() -> None:
     template = build_scene_template()
@@ -92,3 +120,29 @@ def test_latent_state_spec_is_structured() -> None:
     assert latent_state.state_type == "belief"
     assert latent_state.sampling_strategy == "choice"
     assert latent_state.allowed_values == ["cupboard", "drawer"]
+
+    with pytest.raises(ValueError, match="owner_role references unknown role"):
+        SceneTemplate(
+            template_id="invalid-state",
+            task_id="belief.false_location",
+            scene_blueprint="Broken latent state owner.",
+            slot_specs=[SlotSpec(slot_id="observer", value_type="person_name")],
+            roles=[
+                RoleSpec(
+                    role_id="observer",
+                    role_type="agent",
+                    display_name_source="slot:observer",
+                )
+            ],
+            relations=[],
+            latent_state_specs=[
+                LatentStateSpec(
+                    state_id="belief-location",
+                    owner_role="missing-role",
+                    state_type="belief",
+                    allowed_values=["cupboard"],
+                    sampling_strategy="choice",
+                )
+            ],
+            constraints=[],
+        )
