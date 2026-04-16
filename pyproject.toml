@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "smdgf"
 version = "0.1.0"
 description = "Social mind data generation framework"
-readme = "AGENTS.md"
+readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
   "pydantic>=2.12,<3",
