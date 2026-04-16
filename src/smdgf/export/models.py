@@ -35,3 +35,14 @@ class ExportRecord(BaseModel):
     payload: dict[str, Any] = Field(default_factory=dict)
     provenance: dict[str, Any] = Field(default_factory=dict)
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+class ExportSplit(BaseModel):
+    """Manifest entry for one exported split artifact."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    name: str = Field(min_length=1)
+    format: ExportFormatName
+    path: str = Field(min_length=1)
+    record_count: int = Field(default=0, ge=0)
