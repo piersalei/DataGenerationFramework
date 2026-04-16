@@ -119,7 +119,10 @@ def compare_runs(
 
     metric_names = sorted(set(baseline.metrics) | set(candidate.metrics))
     metric_deltas = {
-        name: candidate.metrics.get(name, 0.0) - baseline.metrics.get(name, 0.0)
+        name: round(
+            candidate.metrics.get(name, 0.0) - baseline.metrics.get(name, 0.0),
+            10,
+        )
         for name in metric_names
     }
 
