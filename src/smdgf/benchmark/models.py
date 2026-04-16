@@ -99,6 +99,34 @@ class BenchmarkRunManifest(BaseModel):
         return cls.model_validate(json.loads(path.read_text(encoding="utf-8")))
 
 
+class TrackedBenchmarkRun(BaseModel):
+    """Comparison-friendly tracking record for one benchmark run."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    run_id: str = Field(min_length=1)
+    benchmark_id: str = Field(min_length=1)
+    tracked_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    benchmark_manifest_path: Optional[str] = None
+    params: dict[str, Any] = Field(default_factory=dict)
+    metrics: dict[str, float] = Field(default_factory=dict)
+    tags: dict[str, str] = Field(default_factory=dict)
+    artifact_refs: list[ArtifactReference] = Field(default_factory=list)
+    status: str = Field(default="completed", min_length=1)
+    adapter_metadata: dict[str, Any] = Field(default_factory=dict)
+
+    def write_json(self, path: Path) -> None:
+        """Persist one tracked run record to disk."""
+
+        path.write_text(self.model_dump_json(indent=2), encoding="utf-8")
+
+    @classmethod
+    def read_json(cls, path: Path) -> "TrackedBenchmarkRun":
+        """Load a tracked run record from disk."""
+
+        return cls.model_validate(json.loads(path.read_text(encoding="utf-8")))
+
+
 def build_benchmark_layout(base_dir: Path, run_id: str) -> BenchmarkLayout:
     """Return deterministic filesystem paths for one benchmark run."""
 

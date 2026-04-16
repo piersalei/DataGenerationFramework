@@ -7,8 +7,10 @@ from smdgf.benchmark.models import (
     BenchmarkLayout,
     BenchmarkRunManifest,
     SeedInventory,
+    TrackedBenchmarkRun,
     build_benchmark_layout,
 )
+from smdgf.benchmark.tracker import LocalRunTracker, RunComparison, RunTracker, compare_runs
 
 __all__ = [
     "ArtifactReference",
@@ -16,6 +18,11 @@ __all__ = [
     "BenchmarkConfigSnapshot",
     "BenchmarkLayout",
     "BenchmarkRunManifest",
+    "LocalRunTracker",
+    "RunComparison",
+    "RunTracker",
     "SeedInventory",
+    "TrackedBenchmarkRun",
     "build_benchmark_layout",
+    "compare_runs",
 ]
