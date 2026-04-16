@@ -1,0 +1,28 @@
+"""Shared export models."""
+
+from __future__ import annotations
+
+from datetime import datetime, timezone
+from typing import Any, Literal, Optional
+
+from pydantic import BaseModel, ConfigDict, Field
+
+ExportFormatName = Literal["qa", "mcq", "open_qa"]
+
+
+class ExportRecord(BaseModel):
+    """One rendered dataset record derived from a canonical sample."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    export_id: str = Field(min_length=1)
+    source_sample_id: str = Field(min_length=1)
+    task_id: str = Field(min_length=1)
+    format: ExportFormatName
+    split: str = Field(default="unsplit", min_length=1)
+    context: Optional[str] = None
+    question: str = Field(min_length=1)
+    answer: Any
+    payload: dict[str, Any] = Field(default_factory=dict)
+    provenance: dict[str, Any] = Field(default_factory=dict)
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
