@@ -29,6 +29,29 @@ def test_baseline_taskpack_smoke_produces_benchmark_run_refs(
     assert smoke_run.benchmark_manifest.metadata["fixture_paths"] == (
         task_pack.fixture_paths()
     )
+    assert smoke_run.benchmark_manifest.metadata["pipeline_helpers"] == [
+        "GenerationRuntime",
+        "RuleEngine",
+        "build_qc_report",
+        "export_sample_to_qa",
+        "export_sample_to_open_qa",
+        "export_sample_to_mcq",
+        "write_export_manifest",
+    ]
+    assert [item.status for item in smoke_run.generation_manifest.items] == [
+        "completed",
+        "completed",
+    ]
+    assert [item.result.model_id for item in smoke_run.generation_manifest.items] == [
+        "fixture-smoke-model",
+        "fixture-smoke-model",
+    ]
+    assert smoke_run.qc_report.metrics.total_candidates == 2
+    assert smoke_run.qc_report.metrics.accepted == 2
+    assert smoke_run.qc_report.metrics.rejected == 0
+    for split in smoke_run.export_manifest.splits:
+        assert Path(split.path).exists()
+        assert split.record_count >= 2
 
 
 def test_baseline_taskpack_lists_task_ids_and_fixture_paths(
@@ -86,3 +109,7 @@ def test_smoke_taskpack_run_records_tracking_summary(
         "task_ids": list(task_pack.task_ids),
         "config_path": "configs/benchmark/local-smoke.yaml",
     }
+    assert smoke_run.qc_report.metadata["source_generation_run_id"] == (
+        smoke_run.generation_manifest.run_id
+    )
+    assert smoke_run.export_manifest.source_qc_run_id == smoke_run.qc_report.run_id
