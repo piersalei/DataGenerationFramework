@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Generation Runtime** - Add provider-agnostic batch generation and run provenance. (completed 2026-04-15)
 - [x] **Phase 4: Quality Control Pipeline** - Implement deterministic and score-based filtering plus audit artifacts. (completed 2026-04-15)
 - [x] **Phase 5: Multi-Format Export** - Render approved canonical samples into QA, MCQ, and open QA outputs. (completed 2026-04-16)
-- [ ] **Phase 6: Reproducible Benchmark Runs** - Package run manifests, tracking, and baseline task packs for internal benchmark building.
+- [x] **Phase 6: Reproducible Benchmark Runs** - Package run manifests, tracking, and baseline task packs for internal benchmark building. (completed 2026-04-16)
 
 ## Phase Details
 
@@ -119,9 +119,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 06-01: Integrate run manifests, DVC-friendly artifact layout, and experiment metadata capture.
-- [ ] 06-02: Add MLflow or equivalent run tracking and comparison hooks.
-- [ ] 06-03: Ship baseline internal task pack examples and end-to-end smoke tests.
+- [x] 06-01: Integrate run manifests, DVC-friendly artifact layout, and experiment metadata capture.
+- [x] 06-02: Add MLflow or equivalent run tracking and comparison hooks.
+- [x] 06-03: Ship baseline internal task pack examples and end-to-end smoke tests.
 
 ## Progress
 
@@ -135,4 +135,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 3. Generation Runtime | 4/4 | Complete    | 2026-04-15 |
 | 4. Quality Control Pipeline | 4/4 | Complete    | 2026-04-15 |
 | 5. Multi-Format Export | 3/3 | Complete    | 2026-04-16 |
-| 6. Reproducible Benchmark Runs | 0/3 | Not started | - |
+| 6. Reproducible Benchmark Runs | 3/3 | Complete    | 2026-04-16 |

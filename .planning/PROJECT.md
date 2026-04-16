@@ -16,7 +16,9 @@ Produce high-quality, reproducible social-mind benchmark data with minimal manua
 
 ### Validated
 
-(None yet - ship to validate)
+- [x] Canonical-sample-first pipeline foundation validated through Phases 1-6.
+- [x] Local and remote generation, QC, export, and reproducible benchmark packaging validated in code and tests.
+- [x] Reproducible benchmark runs with local-first tracking and a baseline end-to-end task pack validated in Phase 6.
 
 ### Active
 
@@ -24,7 +26,7 @@ Produce high-quality, reproducible social-mind benchmark data with minimal manua
 - [ ] Support the full target ability space: intention inference, belief tracking, multi-role relation understanding, emotion and motivation reasoning, social decision making, and implicit stance or strategy understanding.
 - [ ] Preserve one canonical latent sample representation that can be rendered into QA, multiple-choice, and open-ended QA formats.
 - [ ] Run against both local and remote LLM providers under a unified execution interface.
-- [ ] Make every dataset build reproducible through versioned configs, seeds, prompts, and run metadata.
+- [ ] Extend the validated backbone with additional task families, richer review workflows, and future release/reporting features.
 
 ### Out of Scope
 
@@ -78,4 +80,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-15 after initialization*
+*Last updated: 2026-04-16 after Phase 6 completion*

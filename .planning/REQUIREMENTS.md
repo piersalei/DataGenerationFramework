@@ -44,8 +44,8 @@
 
 ### Reproducibility And Operations
 
-- [ ] **REPR-01**: Researcher can reproduce a dataset build from versioned config, prompt template, model identifier, and seed inputs.
-- [ ] **REPR-02**: Framework records run parameters, metrics, and artifacts for later comparison across benchmark builds.
+- [x] **REPR-01**: Researcher can reproduce a dataset build from versioned config, prompt template, model identifier, and seed inputs.
+- [x] **REPR-02**: Framework records run parameters, metrics, and artifacts for later comparison across benchmark builds.
 
 ## v2 Requirements
 
@@ -91,8 +91,8 @@
 | EXPO-02 | Phase 5 | Complete |
 | EXPO-03 | Phase 5 | Complete |
 | EXPO-04 | Phase 5 | Complete |
-| REPR-01 | Phase 6 | Pending |
-| REPR-02 | Phase 6 | Pending |
+| REPR-01 | Phase 6 | Complete |
+| REPR-02 | Phase 6 | Complete |
 
 **Coverage:**
 - v1 requirements: 24 total
@@ -101,4 +101,4 @@
 
 ---
 *Requirements defined: 2026-04-15*
-*Last updated: 2026-04-16 after Phase 5 completion*
+*Last updated: 2026-04-16 after Phase 6 completion*
