@@ -87,10 +87,14 @@ class LocalRunTracker:
             run_id=manifest.run_id,
             benchmark_id=manifest.benchmark_id,
             benchmark_manifest_path=manifest.layout.manifest_path,
-            params=dict(params or manifest.config_snapshot.values),
-            metrics=dict(metrics or manifest.metrics),
+            params=dict(
+                manifest.config_snapshot.values if params is None else params
+            ),
+            metrics=dict(manifest.metrics if metrics is None else metrics),
             tags=_coerce_tags(tags, manifest.tags),
-            artifact_refs=list(artifact_refs or manifest.artifact_refs),
+            artifact_refs=list(
+                manifest.artifact_refs if artifact_refs is None else artifact_refs
+            ),
             status=status,
             adapter_metadata={"adapter_count": len(self._adapters)},
         )

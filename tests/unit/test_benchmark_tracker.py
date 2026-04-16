@@ -198,3 +198,23 @@ def test_tracker_rejects_unsafe_run_id(tmp_path: Path) -> None:
         assert "run_id" in str(exc)
     else:  # pragma: no cover - defensive failure path
         raise AssertionError("unsafe run_id should be rejected")
+
+
+def test_tracker_preserves_explicit_empty_overrides(tmp_path: Path) -> None:
+    tracker = LocalRunTracker(tmp_path / "tracking")
+    manifest = _manifest(
+        tmp_path,
+        run_id="bench-run-032",
+        metrics={"accepted_rate": 0.75},
+    )
+
+    tracked_run = tracker.track_run(
+        manifest,
+        params={},
+        metrics={},
+        artifact_refs=[],
+    )
+
+    assert tracked_run.params == {}
+    assert tracked_run.metrics == {}
+    assert tracked_run.artifact_refs == []

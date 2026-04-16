@@ -107,6 +107,13 @@ def test_benchmark_layout_rejects_unsafe_run_id(tmp_path: Path) -> None:
     else:  # pragma: no cover - defensive failure path
         raise AssertionError("unsafe run_id should be rejected")
 
+    try:
+        build_benchmark_layout(tmp_path, "..")
+    except ValueError as exc:
+        assert "run_id" in str(exc)
+    else:  # pragma: no cover - defensive failure path
+        raise AssertionError("parent-directory run_id should be rejected")
+
 
 def test_benchmark_manifest_round_trip_preserves_config_snapshot(tmp_path: Path) -> None:
     layout = build_benchmark_layout(tmp_path, "bench-run-004")

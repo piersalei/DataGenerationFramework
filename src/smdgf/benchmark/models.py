@@ -147,6 +147,8 @@ def build_benchmark_layout(base_dir: Path, run_id: str) -> BenchmarkLayout:
 def validate_run_id_fragment(run_id: str) -> str:
     """Validate that a run id is safe to use as a filesystem path fragment."""
 
+    if run_id in {".", ".."}:
+        raise ValueError("run_id must not be '.' or '..'")
     if not _SAFE_RUN_ID_RE.fullmatch(run_id):
         raise ValueError(
             "run_id must contain only letters, numbers, '.', '_' or '-'"
