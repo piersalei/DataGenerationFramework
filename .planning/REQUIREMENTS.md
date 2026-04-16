@@ -37,10 +37,10 @@
 
 ### Export
 
-- [ ] **EXPO-01**: Researcher can export approved canonical samples as QA records.
-- [ ] **EXPO-02**: Researcher can export approved canonical samples as multiple-choice records from the same underlying sample.
-- [ ] **EXPO-03**: Researcher can export approved canonical samples as open-ended QA records from the same underlying sample.
-- [ ] **EXPO-04**: Framework writes dataset manifests that describe splits, configs, seeds, and artifact locations for each export run.
+- [x] **EXPO-01**: Researcher can export approved canonical samples as QA records.
+- [x] **EXPO-02**: Researcher can export approved canonical samples as multiple-choice records from the same underlying sample.
+- [x] **EXPO-03**: Researcher can export approved canonical samples as open-ended QA records from the same underlying sample.
+- [x] **EXPO-04**: Framework writes dataset manifests that describe splits, configs, seeds, and artifact locations for each export run.
 
 ### Reproducibility And Operations
 
@@ -87,10 +87,10 @@
 | QUAL-04 | Phase 4 | Complete |
 | QUAL-05 | Phase 4 | Complete |
 | QUAL-06 | Phase 4 | Complete |
-| EXPO-01 | Phase 5 | Pending |
-| EXPO-02 | Phase 5 | Pending |
-| EXPO-03 | Phase 5 | Pending |
-| EXPO-04 | Phase 5 | Pending |
+| EXPO-01 | Phase 5 | Complete |
+| EXPO-02 | Phase 5 | Complete |
+| EXPO-03 | Phase 5 | Complete |
+| EXPO-04 | Phase 5 | Complete |
 | REPR-01 | Phase 6 | Pending |
 | REPR-02 | Phase 6 | Pending |
 
@@ -101,4 +101,4 @@
 
 ---
 *Requirements defined: 2026-04-15*
-*Last updated: 2026-04-15 after Phase 4 completion*
+*Last updated: 2026-04-16 after Phase 5 completion*

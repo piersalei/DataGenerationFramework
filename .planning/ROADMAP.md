@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Scenario And Sampling Engine** - Build template, role, latent-state, and seeded sampling foundations. (completed 2026-04-15)
 - [x] **Phase 3: Generation Runtime** - Add provider-agnostic batch generation and run provenance. (completed 2026-04-15)
 - [x] **Phase 4: Quality Control Pipeline** - Implement deterministic and score-based filtering plus audit artifacts. (completed 2026-04-15)
-- [ ] **Phase 5: Multi-Format Export** - Render approved canonical samples into QA, MCQ, and open QA outputs.
+- [x] **Phase 5: Multi-Format Export** - Render approved canonical samples into QA, MCQ, and open QA outputs. (completed 2026-04-16)
 - [ ] **Phase 6: Reproducible Benchmark Runs** - Package run manifests, tracking, and baseline task packs for internal benchmark building.
 
 ## Phase Details
@@ -103,9 +103,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 05-01: Implement canonical-to-QA and canonical-to-open-QA exporters.
-- [ ] 05-02: Implement canonical-to-MCQ exporter and distractor strategy hooks.
-- [ ] 05-03: Implement dataset manifests and packaged export layouts.
+- [x] 05-01: Implement canonical-to-QA and canonical-to-open-QA exporters.
+- [x] 05-02: Implement canonical-to-MCQ exporter and distractor strategy hooks.
+- [x] 05-03: Implement dataset manifests and packaged export layouts.
 
 ### Phase 6: Reproducible Benchmark Runs
 **Goal**: Make the whole framework usable for internal benchmark construction through tracked runs, reproducible manifests, and built-in baseline task packs.
@@ -134,5 +134,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 2. Scenario And Sampling Engine | 3/3 | Complete    | 2026-04-15 |
 | 3. Generation Runtime | 4/4 | Complete    | 2026-04-15 |
 | 4. Quality Control Pipeline | 4/4 | Complete    | 2026-04-15 |
-| 5. Multi-Format Export | 0/3 | Not started | - |
+| 5. Multi-Format Export | 3/3 | Complete    | 2026-04-16 |
 | 6. Reproducible Benchmark Runs | 0/3 | Not started | - |
