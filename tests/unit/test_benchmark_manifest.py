@@ -99,6 +99,15 @@ def test_benchmark_layout_is_deterministic_by_run_id(tmp_path: Path) -> None:
     assert first != third
 
 
+def test_benchmark_layout_rejects_unsafe_run_id(tmp_path: Path) -> None:
+    try:
+        build_benchmark_layout(tmp_path, "../escape")
+    except ValueError as exc:
+        assert "run_id" in str(exc)
+    else:  # pragma: no cover - defensive failure path
+        raise AssertionError("unsafe run_id should be rejected")
+
+
 def test_benchmark_manifest_round_trip_preserves_config_snapshot(tmp_path: Path) -> None:
     layout = build_benchmark_layout(tmp_path, "bench-run-004")
     run_dir = Path(layout.run_dir)

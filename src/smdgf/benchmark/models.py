@@ -3,11 +3,15 @@
 from __future__ import annotations
 
 import json
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Optional
 
 from pydantic import BaseModel, ConfigDict, Field
+
+
+_SAFE_RUN_ID_RE = re.compile(r"^[A-Za-z0-9._-]+$")
 
 
 class ArtifactReference(BaseModel):
@@ -130,10 +134,21 @@ class TrackedBenchmarkRun(BaseModel):
 def build_benchmark_layout(base_dir: Path, run_id: str) -> BenchmarkLayout:
     """Return deterministic filesystem paths for one benchmark run."""
 
-    run_dir = base_dir / run_id
+    safe_run_id = validate_run_id_fragment(run_id)
+    run_dir = base_dir / safe_run_id
     return BenchmarkLayout(
         run_dir=str(run_dir),
         manifest_path=str(run_dir / "manifest.json"),
         artifacts_dir=str(run_dir / "artifacts"),
         reports_dir=str(run_dir / "reports"),
     )
+
+
+def validate_run_id_fragment(run_id: str) -> str:
+    """Validate that a run id is safe to use as a filesystem path fragment."""
+
+    if not _SAFE_RUN_ID_RE.fullmatch(run_id):
+        raise ValueError(
+            "run_id must contain only letters, numbers, '.', '_' or '-'"
+        )
+    return run_id

@@ -14,6 +14,11 @@ from smdgf.benchmark import (
 )
 
 
+class _FailingAdapter:
+    def record_run(self, tracked_run: object) -> None:
+        raise RuntimeError("adapter offline")
+
+
 def _artifact_ref(
     *,
     artifact_type: str,
@@ -160,3 +165,36 @@ def test_tracker_round_trip_preserves_tags(tmp_path: Path) -> None:
         "priority": "high",
         "labels": "nightly,smoke",
     }
+
+
+def test_tracker_records_adapter_errors_without_failing_local_persistence(
+    tmp_path: Path,
+) -> None:
+    tracker = LocalRunTracker(
+        tmp_path / "tracking",
+        adapters=[_FailingAdapter()],
+    )
+    manifest = _manifest(tmp_path, run_id="bench-run-030")
+
+    tracked_run = tracker.track_run(manifest)
+    persisted = tracker.get_run("bench-run-030")
+
+    assert tracked_run.adapter_metadata["adapter_count"] == 1
+    assert tracked_run.adapter_metadata["adapter_errors"] == [
+        {"adapter": "_FailingAdapter", "error": "adapter offline"}
+    ]
+    assert persisted.adapter_metadata == tracked_run.adapter_metadata
+
+
+def test_tracker_rejects_unsafe_run_id(tmp_path: Path) -> None:
+    tracker = LocalRunTracker(tmp_path / "tracking")
+    manifest = _manifest(tmp_path, run_id="bench-run-031").model_copy(
+        update={"run_id": "nested/run"}
+    )
+
+    try:
+        tracker.track_run(manifest)
+    except ValueError as exc:
+        assert "run_id" in str(exc)
+    else:  # pragma: no cover - defensive failure path
+        raise AssertionError("unsafe run_id should be rejected")

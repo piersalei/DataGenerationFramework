@@ -7,7 +7,12 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable, Protocol
 
-from smdgf.benchmark.models import ArtifactReference, BenchmarkRunManifest, TrackedBenchmarkRun
+from smdgf.benchmark.models import (
+    ArtifactReference,
+    BenchmarkRunManifest,
+    TrackedBenchmarkRun,
+    validate_run_id_fragment,
+)
 
 
 class TrackingAdapter(Protocol):
@@ -89,9 +94,22 @@ class LocalRunTracker:
             status=status,
             adapter_metadata={"adapter_count": len(self._adapters)},
         )
-        tracked_run.write_json(self._run_path(manifest.run_id))
+        run_path = self._run_path(manifest.run_id)
+        tracked_run.write_json(run_path)
+        adapter_errors: list[dict[str, str]] = []
         for adapter in self._adapters:
-            adapter.record_run(tracked_run)
+            try:
+                adapter.record_run(tracked_run)
+            except Exception as exc:  # pragma: no cover - defensive integration path
+                adapter_errors.append(
+                    {
+                        "adapter": type(adapter).__name__,
+                        "error": str(exc),
+                    }
+                )
+        if adapter_errors:
+            tracked_run.adapter_metadata["adapter_errors"] = adapter_errors
+            tracked_run.write_json(run_path)
         return tracked_run
 
     def get_run(self, run_id: str) -> TrackedBenchmarkRun:
@@ -108,7 +126,8 @@ class LocalRunTracker:
         return runs
 
     def _run_path(self, run_id: str) -> Path:
-        return self._runs_dir / f"{run_id}.json"
+        safe_run_id = validate_run_id_fragment(run_id)
+        return self._runs_dir / f"{safe_run_id}.json"
 
 
 def compare_runs(

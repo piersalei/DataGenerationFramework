@@ -9,6 +9,7 @@ from smdgf.benchmark.models import (
     SeedInventory,
     TrackedBenchmarkRun,
     build_benchmark_layout,
+    validate_run_id_fragment,
 )
 from smdgf.benchmark.tracker import LocalRunTracker, RunComparison, RunTracker, compare_runs
 
@@ -25,4 +26,5 @@ __all__ = [
     "TrackedBenchmarkRun",
     "build_benchmark_layout",
     "compare_runs",
+    "validate_run_id_fragment",
 ]
