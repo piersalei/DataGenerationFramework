@@ -93,7 +93,9 @@ class LocalRunTracker:
             metrics=dict(manifest.metrics if metrics is None else metrics),
             tags=_coerce_tags(tags, manifest.tags),
             artifact_refs=list(
-                manifest.artifact_refs if artifact_refs is None else artifact_refs
+                _default_artifact_refs(manifest)
+                if artifact_refs is None
+                else artifact_refs
             ),
             status=status,
             adapter_metadata={"adapter_count": len(self._adapters)},
@@ -185,6 +187,18 @@ def _coerce_tags(
     if normalized:
         tags.setdefault("labels", ",".join(normalized))
     return tags
+
+
+def _default_artifact_refs(
+    manifest: BenchmarkRunManifest,
+) -> list[ArtifactReference]:
+    if manifest.artifact_refs:
+        return list(manifest.artifact_refs)
+    return [
+        manifest.generation_manifest,
+        manifest.qc_report,
+        manifest.export_manifest,
+    ]
 
 
 def _json_default(value: Any) -> Any:

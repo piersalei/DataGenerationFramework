@@ -218,3 +218,20 @@ def test_tracker_preserves_explicit_empty_overrides(tmp_path: Path) -> None:
     assert tracked_run.params == {}
     assert tracked_run.metrics == {}
     assert tracked_run.artifact_refs == []
+
+
+def test_tracker_defaults_to_manifest_refs_when_aggregate_refs_missing(
+    tmp_path: Path,
+) -> None:
+    tracker = LocalRunTracker(tmp_path / "tracking")
+    manifest = _manifest(tmp_path, run_id="bench-run-033").model_copy(
+        update={"artifact_refs": []}
+    )
+
+    tracked_run = tracker.track_run(manifest)
+
+    assert [ref.artifact_type for ref in tracked_run.artifact_refs] == [
+        "generation",
+        "qc",
+        "export",
+    ]

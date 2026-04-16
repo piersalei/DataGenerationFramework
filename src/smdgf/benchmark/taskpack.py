@@ -269,7 +269,7 @@ def smoke_taskpack_run(
         benchmark_manifest,
         params={
             "task_pack_id": task_pack.pack_id,
-            "task_ids": ",".join(task_pack.task_ids),
+            "task_ids": list(task_pack.task_ids),
             "config_path": config_path,
         },
         metrics=dict(benchmark_manifest.metrics),
@@ -286,6 +286,7 @@ def smoke_taskpack_run(
         tracking_summary={
             "tracked_run_id": tracked_run.run_id,
             "tracked_status": tracked_run.status,
+            "tracked_params": dict(tracked_run.params),
             "artifact_ref_count": len(tracked_run.artifact_refs),
             "tracked_metrics": dict(tracked_run.metrics),
             "tracked_tags": dict(tracked_run.tags),

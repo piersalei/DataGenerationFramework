@@ -81,3 +81,8 @@ def test_smoke_taskpack_run_records_tracking_summary(
     )
     assert smoke_run.benchmark_manifest.code_snapshot.revision == "test-revision"
     assert smoke_run.benchmark_manifest.seed_inventory.generation_seeds == [13, 14]
+    assert smoke_run.tracking_summary["tracked_params"] == {
+        "task_pack_id": task_pack.pack_id,
+        "task_ids": list(task_pack.task_ids),
+        "config_path": "configs/benchmark/local-smoke.yaml",
+    }
