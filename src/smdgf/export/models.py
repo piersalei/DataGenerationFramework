@@ -10,6 +10,15 @@ from pydantic import BaseModel, ConfigDict, Field
 ExportFormatName = Literal["qa", "mcq", "open_qa"]
 
 
+class ExportOption(BaseModel):
+    """One MCQ option emitted by an export renderer."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    option_id: str = Field(min_length=1)
+    text: str = Field(min_length=1)
+
+
 class ExportRecord(BaseModel):
     """One rendered dataset record derived from a canonical sample."""
 
