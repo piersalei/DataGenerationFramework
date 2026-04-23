@@ -21,6 +21,7 @@ class ProviderConfig(BaseModel):
     model: str = Field(min_length=1)
     api_base: Optional[str] = None
     api_key_env: Optional[str] = None
+    api_key: Optional[str] = None
     temperature: float = Field(default=0.0, ge=0.0, le=2.0)
     max_tokens: Optional[int] = Field(default=None, gt=0)
     timeout_seconds: float = Field(default=60.0, gt=0)
@@ -35,7 +36,7 @@ class GenerationRequest(BaseModel):
 
     request_id: str = Field(min_length=1)
     task_id: str = Field(min_length=1)
-    scenario_sample: ScenarioSample
+    scenario_sample: Optional[ScenarioSample] = Field(default=None)
     prompt_text: str = Field(min_length=1)
     provider: str = Field(min_length=1)
     model: str = Field(min_length=1)

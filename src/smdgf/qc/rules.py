@@ -96,6 +96,67 @@ def validate_candidate_structure(candidate: QualityCandidate) -> list[QualityFin
     return findings
 
 
+def context_leakage_rule(candidate: QualityCandidate) -> RuleResult:
+    """Reject candidates whose scene context directly reveals the answer."""
+    findings: list[QualityFinding] = []
+    sample = candidate.canonical_sample
+    context_text = _normalize_text(sample.scene_text or "")
+    answer_map = {answer.question_id: answer for answer in sample.answers}
+
+    for question in sample.questions:
+        answer = answer_map.get(question.question_id)
+        if answer is None:
+            continue
+        answer_text = _normalize_text(_answer_text(answer.value))
+        if answer_text and len(answer_text) >= 2 and answer_text in context_text:
+            findings.append(
+                QualityFinding(
+                    finding_id=f"{candidate.candidate_id}:{question.question_id}:context-leakage",
+                    source_id="context-leakage",
+                    severity="error",
+                    message="scene context directly reveals the answer",
+                    decision_hint="reject",
+                    evidence={
+                        "question_id": question.question_id,
+                        "scene_text": sample.scene_text,
+                        "answer_text": _answer_text(answer.value),
+                    },
+                )
+            )
+
+    return RuleResult(rule_id="context-leakage", passed=not findings, findings=findings)
+
+
+def question_similarity_rule(candidate: QualityCandidate) -> RuleResult:
+    """Warn when question text is nearly identical to context (copy-paste pattern)."""
+    findings: list[QualityFinding] = []
+    sample = candidate.canonical_sample
+    context_text = _normalize_text(sample.scene_text or "")
+
+    for question in sample.questions:
+        question_text = _normalize_text(question.text)
+        if not context_text or not question_text:
+            continue
+        # Check if question is mostly a substring of context (copy-paste from context)
+        if question_text in context_text and len(question_text) < len(context_text):
+            findings.append(
+                QualityFinding(
+                    finding_id=f"{candidate.candidate_id}:{question.question_id}:question-similarity",
+                    source_id="question-similarity",
+                    severity="warning",
+                    message="question is copied directly from context",
+                    decision_hint=None,
+                    evidence={
+                        "question_id": question.question_id,
+                        "question_text": question.text,
+                        "scene_text": sample.scene_text,
+                    },
+                )
+            )
+
+    return RuleResult(rule_id="question-similarity", passed=not findings, findings=findings)
+
+
 def answer_leakage_rule(candidate: QualityCandidate) -> RuleResult:
     """Reject questions that directly leak their semantic answer."""
 
@@ -108,7 +169,7 @@ def answer_leakage_rule(candidate: QualityCandidate) -> RuleResult:
             continue
         answer_text = _normalize_text(_answer_text(answer.value))
         question_text = _normalize_text(question.text)
-        if answer_text and len(answer_text) >= 3 and answer_text in question_text:
+        if answer_text and len(answer_text) >= 2 and answer_text in question_text:
             findings.append(
                 QualityFinding(
                     finding_id=f"{candidate.candidate_id}:{question.question_id}:answer-leakage",
@@ -156,7 +217,12 @@ class RuleEngine:
     """Run deterministic QC rules and derive one normalized QC decision."""
 
     def __init__(self, rules: Optional[Iterable[RuleCallable]] = None) -> None:
-        self.rules = list(rules or [answer_leakage_rule, latent_consistency_rule])
+        self.rules = list(rules or [
+            answer_leakage_rule,
+            context_leakage_rule,
+            question_similarity_rule,
+            latent_consistency_rule,
+        ])
 
     def add_rule(self, rule: RuleCallable) -> None:
         """Register an additional deterministic QC rule."""

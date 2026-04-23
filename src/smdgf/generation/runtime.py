@@ -100,7 +100,7 @@ class GenerationRuntime:
             GenerationRunItem(
                 request_id=request.request_id,
                 task_id=request.task_id,
-                scenario_sample_id=request.scenario_sample.sample_id,
+                scenario_sample_id=request.scenario_sample.sample_id if request.scenario_sample else request.request_id,
                 seed=request.seed,
                 prompt_fingerprint=request.prompt_metadata.get("prompt_fingerprint"),
             )

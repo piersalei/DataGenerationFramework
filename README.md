@@ -1,44 +1,46 @@
 # Social Mind Data Generation Framework
 
-This repository is a Python framework for building social-mind benchmark datasets in a reproducible, pipeline-oriented way.
+这个仓库是一个 Python 框架，用于以可复现、面向流水线的方式构建 social-mind 基准数据集。
 
-Current status:
+当前状态：
 
-- Phase 1-6 are implemented and verified.
-- The codebase supports contracts, scenario sampling, generation runtime, QC, export, benchmark packaging, and local run tracking.
-- The public CLI is still small.
-- The full pipeline is available primarily through the Python API.
+- Phase 1-6 已实现并通过验证。
+- 代码库已经支持契约定义、场景采样、生成运行时、QC、导出、benchmark 打包，以及本地运行追踪。
+- 对外 CLI 目前还比较小。
+- 完整流水线当前主要通过 Python API 使用。
 
-## What The Project Can Do Today
+## 这个项目现在能做什么
 
-The repository can already support this workflow:
+仓库目前已经可以支持如下工作流：
 
-1. Define task contracts and task specifications.
-2. Define reusable scene templates with roles, relations, and latent states.
-3. Sample deterministic scenarios from seeds.
-4. Build prompts and run generation jobs through a provider-agnostic runtime.
-5. Apply QC rules and produce QC reports.
-6. Export canonical samples to `qa`, `mcq`, and `open_qa`.
-7. Package generation, QC, and export artifacts into a benchmark run manifest.
-8. Track benchmark runs locally and compare them later.
-9. Run a built-in baseline smoke flow that exercises the end-to-end local pipeline.
+1. 定义任务契约和任务规格。
+2. 定义可复用的场景模板，包括角色、关系和潜在状态。
+3. 基于随机种子进行确定性场景采样。
+4. 构建 prompt，并通过与 provider 无关的运行时执行生成任务。
+5. 应用 QC 规则并产出 QC 报告。
+6. 将 canonical sample 导出为 `qa`、`mcq` 和 `open_qa`。
+7. 将生成、QC 和导出产物打包为 benchmark run manifest。
+8. 在本地追踪 benchmark runs，并在之后进行对比。
+9. 运行内置 baseline smoke flow，对本地端到端流水线做一次冒烟验证。
 
-## What The Public CLI Covers Right Now
+## 当前公开 CLI 覆盖范围
 
-The installed `smdgf` CLI currently exposes:
+安装后的 `smdgf` CLI 当前提供：
 
 - `smdgf contracts inspect`
 - `smdgf contracts validate`
 - `smdgf sampling preview`
+- `smdgf yaml assemble-prompt`（从 YAML 契约仅组装 `prompt_text`，不调模型）
+- `smdgf generate`（模板 + `prompts/**/*.txt` → 调用模型 → 质控 → 导出）
 
-Generation, QC, export, benchmark packaging, and tracking are implemented as Python modules, not as first-class CLI commands yet.
+生成、QC、导出、benchmark 打包和运行追踪已经实现，但目前还是 Python 模块，还没有全部作为一等 CLI 命令暴露出来。
 
-## Requirements
+## 环境要求
 
 - Python `>=3.11`
-- Recommended: a virtual environment
+- 建议使用虚拟环境
 
-Install from the repository root:
+在仓库根目录执行安装：
 
 ```bash
 python3.11 -m venv .venv
@@ -47,81 +49,81 @@ python -m pip install --upgrade pip
 pip install -e ".[dev]"
 ```
 
-After that, the `smdgf` command should be available in the active environment.
+安装完成后，`smdgf` 命令应该会在当前激活环境中可用。
 
-If you do not want to install the package yet, use:
+如果你暂时不想安装包，也可以直接这样使用：
 
 ```bash
 PYTHONPATH=src python3 -m smdgf.cli.main --help
 ```
 
-Run the test suite:
+运行测试：
 
 ```bash
 pytest -q
 ```
 
-## Repository Map
+## 仓库结构
 
-Main modules:
+主要模块：
 
-- `src/smdgf/schemas/`: typed contracts for tasks, scenes, specs, and canonical samples
-- `src/smdgf/samplers/`: deterministic sampling helpers
-- `src/smdgf/generation/`: provider abstraction, prompt assembly, runtime, and manifests
-- `src/smdgf/qc/`: QC models, rules, judges, dedup, and reports
-- `src/smdgf/export/`: QA/MCQ/open-QA exporters and export manifests
-- `src/smdgf/benchmark/`: benchmark manifests, tracking, and baseline smoke task pack
-- `src/smdgf/cli/`: current CLI surface
+- `src/smdgf/schemas/`：任务、场景、规格和 canonical sample 的强类型契约
+- `src/smdgf/samplers/`：确定性采样辅助逻辑
+- `src/smdgf/generation/`：provider 抽象、prompt 组装、运行时和 manifest
+- `src/smdgf/qc/`：QC 模型、规则、judge、去重和报告
+- `src/smdgf/export/`：QA/MCQ/open-QA 导出器和导出 manifest
+- `src/smdgf/benchmark/`：benchmark manifest、运行追踪和 baseline smoke task pack
+- `src/smdgf/cli/`：当前 CLI 入口
 
-Useful fixtures:
+常用 fixture：
 
 - `tests/fixtures/task_definition_valid.yaml`
 - `tests/fixtures/task_spec_valid.yaml`
 - `tests/fixtures/scene_template_valid.yaml`
 
-## Quick Start
+## 快速开始
 
-### 1. Validate Contracts From The CLI
+### 1. 通过 CLI 校验契约
 
-Validate a task definition:
+校验 task definition：
 
 ```bash
 smdgf contracts validate tests/fixtures/task_definition_valid.yaml --kind task-definition
 ```
 
-Without installation:
+如果未安装包：
 
 ```bash
 PYTHONPATH=src python3 -m smdgf.cli.main contracts validate tests/fixtures/task_definition_valid.yaml --kind task-definition
 ```
 
-Validate a task specification:
+校验 task specification：
 
 ```bash
 smdgf contracts validate tests/fixtures/task_spec_valid.yaml --kind task-spec
 ```
 
-Without installation:
+如果未安装包：
 
 ```bash
 PYTHONPATH=src python3 -m smdgf.cli.main contracts validate tests/fixtures/task_spec_valid.yaml --kind task-spec
 ```
 
-Preview a deterministic sampled scenario:
+预览一个确定性采样场景：
 
 ```bash
 smdgf sampling preview tests/fixtures/scene_template_valid.yaml --seed 17
 ```
 
-Without installation:
+如果未安装包：
 
 ```bash
 PYTHONPATH=src python3 -m smdgf.cli.main sampling preview tests/fixtures/scene_template_valid.yaml --seed 17
 ```
 
-### 2. Run The Built-In End-To-End Smoke Flow
+### 2. 运行内置端到端 Smoke Flow
 
-If you want the shortest complete example, use the built-in baseline task pack:
+如果你想先跑一个最短、最完整的示例，直接使用内置 baseline task pack：
 
 ```python
 from pathlib import Path
@@ -140,27 +142,27 @@ with TemporaryDirectory() as tmp:
     print("tracking_summary:", run.tracking_summary)
 ```
 
-What this smoke flow actually exercises:
+这个 smoke flow 实际会覆盖：
 
 - `GenerationRuntime`
-- prompt assembly
-- QC rule evaluation and `build_qc_report()`
+- prompt 组装
+- QC 规则评估和 `build_qc_report()`
 - `export_sample_to_qa()`
 - `export_sample_to_open_qa()`
 - `export_sample_to_mcq()`
 - `write_export_manifest()`
-- benchmark manifest packaging
+- benchmark manifest 打包
 - `LocalRunTracker`
 
-This is the best reference integration path in the repository today.
+这是当前仓库里最值得参考的集成路径。
 
-## Complete Usage Guide
+## 完整使用说明
 
-This section shows how to use the framework as composable building blocks.
+这一部分展示如何把框架当作一组可组合的构建块来使用。
 
-### Step 1. Load And Validate Structured Contracts
+### 第 1 步：加载并校验结构化契约
 
-You can validate from files:
+你可以直接从文件进行校验：
 
 ```python
 from pathlib import Path
@@ -179,7 +181,7 @@ scene_template = SceneTemplate.model_validate(
 )
 ```
 
-You can also register task definitions in memory:
+你也可以在内存中注册任务定义：
 
 ```python
 from smdgf.registry import TaskRegistry
@@ -189,12 +191,12 @@ registry.register(task_definition)
 print([task.task_id for task in registry.list()])
 ```
 
-Important note:
+需要注意：
 
-- `TaskRegistry` is currently in-memory only.
-- There is no persistent task catalog backend yet.
+- `TaskRegistry` 当前只存在于内存中。
+- 还没有持久化的 task catalog 后端。
 
-### Step 2. Sample A Scenario Deterministically
+### 第 2 步：做确定性场景采样
 
 ```python
 from smdgf.samplers import SamplingContext, sample_scenario
@@ -207,15 +209,15 @@ print(scenario_sample.sampled_slots)
 print(scenario_sample.latent_state_assignments)
 ```
 
-This gives you:
+这一步会给你：
 
 - sampled slots
 - sampled roles
 - sampled relations
 - sampled latent state assignments
-- provenance with the seed
+- 带 seed 的 provenance
 
-### Step 3. Build A Prompt
+### 第 3 步：构建 Prompt
 
 ```python
 from smdgf.generation.prompts import build_generation_prompt
@@ -231,7 +233,7 @@ print(prompt_text)
 print(prompt_metadata)
 ```
 
-The prompt metadata includes:
+`prompt_metadata` 中包含：
 
 - `task_id`
 - `scenario_sample_id`
@@ -239,11 +241,11 @@ The prompt metadata includes:
 - `question_ids`
 - `prompt_fingerprint`
 
-### Step 4. Run Generation Through The Runtime
+### 第 4 步：通过 Runtime 执行生成
 
-The framework provides a provider-agnostic generation runtime. You can plug in LiteLLM or your own provider implementation.
+框架提供了一个与 provider 无关的 generation runtime。你可以接 LiteLLM，也可以接自己的 provider 实现。
 
-Minimal local stub example:
+下面是一个最小本地 stub 示例：
 
 ```python
 from pathlib import Path
@@ -303,23 +305,23 @@ print(generation_item.status)
 print(generation_item.result.response_text)
 ```
 
-What the runtime already supports:
+当前 runtime 已支持：
 
 - checkpointed manifests
 - resumable runs
 - retry handling
 - provider/model/prompt provenance
 
-### Step 5. Convert Generation Output Into A Canonical Sample
+### 第 5 步：把生成输出转换为 Canonical Sample
 
-This framework deliberately separates generation from canonical-sample construction.
+这个框架有意将“生成”与“canonical sample 构建”分开。
 
-That means:
+也就是说：
 
-- the runtime gives you generated outputs and provenance
-- your task logic decides how to convert model output into a `CanonicalSample`
+- runtime 负责给你生成结果和 provenance
+- 你的任务逻辑负责把模型输出转换成 `CanonicalSample`
 
-Minimal example:
+最小示例：
 
 ```python
 from smdgf.schemas import CanonicalAnswer, CanonicalQuestion, CanonicalSample, ProvenanceRecord
@@ -352,14 +354,14 @@ canonical_sample = CanonicalSample(
 )
 ```
 
-Important note:
+需要注意：
 
-- there is no generic public “generation result -> canonical sample” adapter yet
-- the built-in smoke task pack contains the best reference implementation for this handoff
+- 目前还没有通用的公开适配器，把“generation result”直接转成 `CanonicalSample`
+- 内置 smoke task pack 是当前最好的参考实现
 
-### Step 6. Run QC
+### 第 6 步：运行 QC
 
-Basic QC is rule-driven and works on canonical samples:
+基础 QC 是基于规则的，直接作用在 canonical sample 上：
 
 ```python
 from smdgf.qc import QualityCandidate, RuleEngine
@@ -386,17 +388,17 @@ print(decision.status)
 print(qc_report.metrics.model_dump())
 ```
 
-QC currently includes:
+当前 QC 包括：
 
-- structural validation
-- deterministic rules
+- 结构校验
+- 确定性规则
 - judge hooks
-- duplicate and near-duplicate support
-- review queue and rejection manifest generation
+- duplicate 和 near-duplicate 支持
+- review queue 和 rejection manifest 生成
 
-### Step 7. Export Approved Canonical Samples
+### 第 7 步：导出通过审核的 Canonical Samples
 
-QA and open-QA exports:
+QA 和 open-QA 导出：
 
 ```python
 from smdgf.export.qa import export_sample_to_open_qa, export_sample_to_qa
@@ -405,7 +407,7 @@ qa_records = export_sample_to_qa(canonical_sample, split="train")
 open_qa_records = export_sample_to_open_qa(canonical_sample, split="train")
 ```
 
-MCQ export needs a distractor strategy:
+MCQ 导出需要一个 distractor strategy：
 
 ```python
 from smdgf.export.mcq import export_sample_to_mcq
@@ -425,7 +427,7 @@ mcq_records = export_sample_to_mcq(
 )
 ```
 
-Write an export manifest:
+写出 export manifest：
 
 ```python
 from smdgf.export.manifest import write_export_manifest
@@ -447,9 +449,9 @@ print(export_manifest.formats)
 print(export_manifest.artifact_paths)
 ```
 
-### Step 8. Package A Benchmark Run
+### 第 8 步：打包一个 Benchmark Run
 
-After generation, QC, and export exist, package them into one benchmark manifest:
+当 generation、QC 和 export 都已经完成后，可以把它们打包成一个 benchmark manifest：
 
 ```python
 from pathlib import Path
@@ -515,7 +517,7 @@ benchmark_manifest = BenchmarkRunManifest(
 benchmark_manifest.write_json(Path(benchmark_layout.manifest_path))
 ```
 
-### Step 9. Track And Compare Benchmark Runs
+### 第 9 步：追踪并比较 Benchmark Runs
 
 ```python
 from pathlib import Path
@@ -539,7 +541,7 @@ print(same_run.params)
 print(len(all_runs))
 ```
 
-To compare two runs:
+比较两个 run：
 
 ```python
 comparison = compare_runs(all_runs[0], all_runs[1])
@@ -547,41 +549,41 @@ print(comparison.metric_deltas)
 print(comparison.changed_tags)
 ```
 
-## Recommended Ways To Use The Project Right Now
+## 当前推荐的使用方式
 
-Use the project in one of two modes:
+现在比较推荐两种使用模式：
 
-### Mode A. Smoke-Test The Whole Stack
+### 模式 A：对整套栈做 Smoke Test
 
-Use `build_baseline_taskpack()` plus `smoke_taskpack_run()` when you want:
+当你需要下面这些东西时，使用 `build_baseline_taskpack()` 加 `smoke_taskpack_run()`：
 
-- a local-only sanity check
-- a concrete reference flow
-- an integration test over generation, QC, export, benchmark packaging, and tracking
+- 一个纯本地的健康检查
+- 一条具体可参考的流水线
+- 一次覆盖 generation、QC、export、benchmark 打包和 tracking 的集成测试
 
-### Mode B. Build Your Own Task Pipeline
+### 模式 B：构建你自己的任务流水线
 
-Use the Python API when you want:
+当你需要下面这些能力时，直接使用 Python API：
 
-- custom task definitions
-- custom canonicalization logic
-- custom provider integration
-- custom QC policies
-- custom export layouts and benchmark packaging
+- 自定义 task definitions
+- 自定义 canonicalization 逻辑
+- 自定义 provider 集成
+- 自定义 QC 策略
+- 自定义 export 布局和 benchmark 打包
 
-## Current Limitations
+## 当前限制
 
-These are the important boundaries to know:
+下面这些边界目前比较重要：
 
-- The CLI is not yet a full orchestrator.
-- `TaskRegistry` is in-memory only.
-- There is no generic public “raw generation output -> canonical sample” adapter.
-- There is no persistent experiment database; tracking is local JSON by default.
-- Human review exists in the data model and QC artifacts, but not yet as a full product workflow.
+- CLI 还不是一个完整的 orchestration 工具。
+- `TaskRegistry` 目前只在内存中工作。
+- 还没有通用的公开适配器把“原始生成输出”转换为 canonical sample。
+- 还没有持久化实验数据库；默认 tracking 是本地 JSON。
+- Human review 已经体现在数据模型和 QC 产物里，但还没有做成完整产品流程。
 
-## Practical First Commands
+## 最实用的第一批命令
 
-If you want the shortest path to confidence:
+如果你想用最短路径确认项目能跑起来：
 
 ```bash
 pip install -e ".[dev]"
@@ -591,7 +593,7 @@ smdgf contracts validate tests/fixtures/task_spec_valid.yaml --kind task-spec
 smdgf sampling preview tests/fixtures/scene_template_valid.yaml --seed 17
 ```
 
-If you are running directly from the repo without installation:
+如果你是不安装、直接从仓库运行：
 
 ```bash
 PYTHONPATH=src pytest -q
@@ -600,7 +602,7 @@ PYTHONPATH=src python3 -m smdgf.cli.main contracts validate tests/fixtures/task_
 PYTHONPATH=src python3 -m smdgf.cli.main sampling preview tests/fixtures/scene_template_valid.yaml --seed 17
 ```
 
-Then run the smoke pack:
+然后再跑 smoke pack：
 
 ```bash
 python - <<'PY'
@@ -617,9 +619,9 @@ with TemporaryDirectory() as tmp:
 PY
 ```
 
-## Relevant Files
+## 相关文件
 
-If you want to keep reading the code after this guide:
+如果你读完这份说明后还想继续看代码，建议从下面这些文件开始：
 
 - [src/smdgf/cli/main.py](/Users/lei/projects/i/DataGenerationFramework/src/smdgf/cli/main.py)
 - [src/smdgf/schemas/task.py](/Users/lei/projects/i/DataGenerationFramework/src/smdgf/schemas/task.py)

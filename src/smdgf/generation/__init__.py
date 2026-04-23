@@ -9,18 +9,21 @@ from smdgf.generation.models import (
     GenerationUsage,
     ProviderConfig,
 )
-from smdgf.generation.providers import GenerationProvider, LiteLLMGenerationProvider
+from smdgf.generation.providers import DirectHTTPProvider
+from smdgf.generation.config import Config
+from smdgf.generation.prompt_builder import PromptBuilder
 from smdgf.generation.runtime import GenerationRuntime
 
 __all__ = [
+    "Config",
+    "DirectHTTPProvider",
     "GenerationError",
-    "GenerationProvider",
     "GenerationRequest",
     "GenerationResult",
     "GenerationRunItem",
     "GenerationRunManifest",
     "GenerationRuntime",
     "GenerationUsage",
-    "LiteLLMGenerationProvider",
+    "PromptBuilder",
     "ProviderConfig",
 ]

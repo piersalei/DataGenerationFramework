@@ -1,0 +1,78 @@
+template_id: emotion.contrasting.scene
+task_id: emotion.contrasting
+scene_blueprint: >-
+  {agent_丙} 做了 {action}，
+  这让 {agent_甲} 和 {agent_乙} 受到了不同影响。
+
+slot_specs:
+  - slot_id: agent_甲
+    value_type: person_name
+  - slot_id: agent_乙
+    value_type: person_name
+  - slot_id: agent_丙
+    value_type: person_name
+  - slot_id: action
+    value_type: social_action
+  - slot_id: emotion_甲
+    value_type: emotion_word
+    allowed_values:
+      - 生气
+      - 高兴
+      - 悲伤
+      - 尴尬
+      - 担心
+      - 感动
+      - 嫉妒
+      - 后悔
+  - slot_id: emotion_乙
+    value_type: emotion_word
+    allowed_values:
+      - 生气
+      - 高兴
+      - 悲伤
+      - 尴尬
+      - 担心
+      - 感动
+      - 嫉妒
+      - 后悔
+
+roles:
+  - role_id: agent_甲
+    role_type: agent
+    display_name_source: slot:agent_甲
+  - role_id: agent_乙
+    role_type: agent
+    display_name_source: slot:agent_乙
+  - role_id: agent_丙
+    role_type: agent
+    display_name_source: slot:agent_丙
+
+relations:
+  - relation_id: affect_甲
+    source_role: agent_丙
+    relation_type: causes_emotion_to
+    target_role: agent_甲
+  - relation_id: affect_乙
+    source_role: agent_丙
+    relation_type: causes_emotion_to
+    target_role: agent_乙
+
+latent_state_specs:
+  - state_id: emotion_甲
+    owner_role: agent_甲
+    state_type: emotion
+    allowed_values:
+      - 生气
+      - 高兴
+      - 悲伤
+      - 尴尬
+    sampling_strategy: choice
+  - state_id: emotion_乙
+    owner_role: agent_乙
+    state_type: emotion
+    allowed_values:
+      - 生气
+      - 高兴
+      - 悲伤
+      - 尴尬
+    sampling_strategy: choice

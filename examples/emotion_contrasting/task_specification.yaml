@@ -1,0 +1,39 @@
+task_id: emotion.contrasting
+scene_templates:
+  - template_id: emotion-contrasting-main
+    narrative_template: >-
+      {agent_丙} 做了 {action}，
+      这让 {agent_甲} 和 {agent_乙} 受到了不同影响。
+    slots:
+      agent_丙: 人名
+      agent_甲: 人名
+      agent_乙: 人名
+      action: 社交行为
+    role_constraints:
+      - agent_丙 的行为同时影响 agent_甲 和 agent_乙
+    latent_state_requirements:
+      - emotion_甲
+      - emotion_乙
+
+question_patterns:
+  - question_id: q_甲
+    prompt_template: "{agent_甲} 会有怎样的心情？"
+    target_capability: emotion
+    answer_mode: single_choice
+    options_count: 4
+
+  - question_id: q_乙
+    prompt_template: "{agent_乙} 会有怎样的心情？"
+    target_capability: emotion
+    answer_mode: single_choice
+    options_count: 4
+
+quality_expectations:
+  - expectation_id: no-context-leak
+    description: 场景描述中不能出现具体的情绪词答案
+    severity: error
+    rule_type: leakage
+  - expectation_id: no-question-leak
+    description: 问题中不能直接包含答案
+    severity: error
+    rule_type: leakage

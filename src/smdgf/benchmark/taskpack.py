@@ -203,7 +203,7 @@ def _smoke_blueprints() -> list[_SmokeBlueprint]:
             ability_category=AbilityCategory.BELIEF,
             target_capability="belief",
             scene_text=(
-                "Mina watches Jun move the notebook into the drawer before leaving the room."
+                "Mina watches Jun place the notebook somewhere before leaving the room."
             ),
             scene_blueprint="{observer} watches {actor} move the {object} into the {location}.",
             sampled_slots={
@@ -233,7 +233,7 @@ def _smoke_blueprints() -> list[_SmokeBlueprint]:
                     sampling_strategy="choice",
                 )
             ],
-            latent_state={"Mina": {"belief_location": "drawer"}},
+            latent_state={"Mina": {"belief_location": "somewhere unknown"}},
             question_text="Where does Mina think the notebook is now?",
             answer_value="drawer",
             rationale="Mina observed Jun place the notebook in the drawer.",
@@ -244,7 +244,7 @@ def _smoke_blueprints() -> list[_SmokeBlueprint]:
             ability_category=AbilityCategory.INTENTION,
             target_capability="intention",
             scene_text=(
-                "Jun quietly reviews Mina's slides so he can help her prepare before the meeting."
+                "Jun quietly reviews Mina's slides before the meeting without saying anything."
             ),
             scene_blueprint="{helper} reviews {target}'s slides before the meeting.",
             sampled_slots={

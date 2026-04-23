@@ -1,0 +1,20 @@
+task_id: emotion.contrasting
+name: 情绪对比推理
+description: >-
+  给定一个社交场景，推断其中不同人物的情绪。
+  同一情境下两个角色的情绪相反，需要模型理解行为对他人的不同影响。
+ability_category: emotion
+sub_capabilities:
+  - contrasting_emotion
+latent_variables:
+  - name: emotion_protagonist
+    description: 第一个受影响角色的情绪
+    value_type: string
+  - name: emotion_contrasting
+    description: 第二个受影响角色的情绪（与前者相反）
+    value_type: string
+answer_mode: single_choice
+supported_exports:
+  - mcq
+  - qa
+  - open_qa

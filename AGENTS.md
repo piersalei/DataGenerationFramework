@@ -41,7 +41,7 @@ The framework is not just a dataset dump script. It is intended to become the te
 ### Typed contracts first
 ### Config-driven generation
 ### Provider-agnostic generation
-### Filtering is a first-class workload
+### Filtering is a core step in the pipeline
 ### Reproducible benchmark claims
 ## Suggested Project Layout
 ## What Not To Use First
