@@ -31,6 +31,29 @@ TEMPLATES_DIR = PROMPTS_DIR / "templates"
 RUNS_DIR = PROJECT_ROOT / "runs"
 
 FORMATS = ["mcq", "mcq_multi", "judge", "open_qa"]
+
+SCENE_DOMAIN_PAIRS = [
+    "①学术科研  ②艺术创作",
+    "①体育竞技  ②法律纠纷",
+    "①医疗健康  ②社区邻里",
+    "①旅行探险  ②历史文化考据",
+    "①技术发明  ②公益志愿服务",
+    "①军事战略  ②环保生态",
+    "①宗教信仰  ②金融投资",
+    "①教育教学  ②娱乐综艺",
+    "①建筑设计  ②农业种植",
+    "①新闻媒体  ②心理咨询",
+    "①考古发掘  ②电子竞技",
+    "①外交谈判  ②手工匠人",
+    "①航天航空  ②餐饮美食",
+    "①时尚设计  ②消防救援",
+    "①哲学辩论  ②物流运输",
+    "①音乐演出  ②刑侦破案",
+    "①婚恋交友  ②科幻创作",
+    "①海洋探索  ②古董鉴定",
+    "①创业融资  ②传统武术",
+    "①天文观测  ②社工帮扶",
+]
 TEMPLATE_MAP = {
     "mcq": "base_mcq.txt",
     "mcq_multi": "base_mcq_multi.txt",
@@ -51,11 +74,17 @@ def load_config(path: str) -> dict:
 
 # ── prompt assembly ─────────────────────────────────────────
 
-def build_prompt(task_id: str, fmt: str) -> str:
+FORMAT_DOMAIN_OFFSET = {"mcq": 0, "mcq_multi": 5, "judge": 10, "open_qa": 15}
+
+
+def build_prompt(task_id: str, fmt: str, sample_idx: int = 0) -> str:
     template_path = TEMPLATES_DIR / TEMPLATE_MAP[fmt]
     fragment_path = PROMPTS_DIR / task_id / f"fragment_{fmt}.txt"
     template = template_path.read_text(encoding="utf-8")
     fragment = fragment_path.read_text(encoding="utf-8")
+    offset = FORMAT_DOMAIN_OFFSET.get(fmt, 0)
+    domains = SCENE_DOMAIN_PAIRS[(offset + sample_idx) % len(SCENE_DOMAIN_PAIRS)]
+    fragment = fragment.replace("{{scene_domains}}", domains)
     return template.replace("{{fragment}}", fragment)
 
 
@@ -80,13 +109,13 @@ def call_llm(prompt: str, cfg: dict, seed: int) -> dict:
         }
         body = {
             "model": model,
-            "max_tokens": 4096,
+            "max_tokens": 16384,
             "temperature": temperature,
             "messages": [{"role": "user", "content": prompt}],
         }
         for attempt in range(3):
             try:
-                resp = httpx.post(url, headers=headers, json=body, timeout=120)
+                resp = httpx.post(url, headers=headers, json=body, timeout=600)
                 resp.raise_for_status()
                 data = resp.json()
                 text = data["content"][0]["text"]
@@ -110,7 +139,7 @@ def call_llm(prompt: str, cfg: dict, seed: int) -> dict:
         }
         for attempt in range(3):
             try:
-                resp = httpx.post(url, headers=headers, json=body, timeout=120)
+                resp = httpx.post(url, headers=headers, json=body, timeout=600)
                 resp.raise_for_status()
                 data = resp.json()
                 text = data["choices"][0]["message"]["content"]
@@ -143,7 +172,7 @@ def run_one(task_id: str, fmt: str, sample_idx: int, cfg: dict,
             seed: int, output_dir: Path) -> dict:
     """Generate one sample. Returns result dict."""
     try:
-        prompt = build_prompt(task_id, fmt)
+        prompt = build_prompt(task_id, fmt, sample_idx)
         result = call_llm(prompt, cfg, seed + sample_idx)
 
         record = {
